@@ -7,3 +7,97 @@
   </head>
   <body></body>
 </html>
+
+<script>
+  function playRound(playerSelection, computerSelection) {
+    if (playerSelection.toUpperCase() == computerSelection.toUpperCase()) {
+      return "draw";
+    } else if (playerSelection.toUpperCase() == "ROCK") {
+      if (computerSelection.toUpperCase() == "PAPER") {
+        return "loss";
+        l;
+      } else if (computerSelection.toUpperCase() == "SCISSORS") {
+        return "win";
+      }
+    } else if (playerSelection.toUpperCase() == "SCISSORS") {
+      if (computerSelection.toUpperCase() == "ROCK") {
+        return "loss";
+      } else if (computerSelection.toUpperCase() == "paper") {
+        return "win";
+      }
+    } else {
+      //player chooses paper
+      if (computerSelection.toUpperCase() == "ROCK") {
+        return "win";
+      } else if (computerSelection.toUpperCase() == "SCISSORS") {
+        return "loss";
+      }
+    }
+  }
+  let roundNumber = 1;
+  function playerChoice() {
+    let playerSelection = prompt(
+      `Round ${roundNumber}: Rock, paper, or scissors?`
+    );
+    if (
+      playerSelection.toUpperCase() == "ROCK" ||
+      playerSelection.toUpperCase() == "SCISSORS" ||
+      playerSelection.toUpperCase() == "PAPER"
+    ) {
+      return playerSelection;
+    } else {
+      alert("You must choose rock, paper, or scissors.");
+    }
+  }
+
+  function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    const playOptions = ["rock", "paper", "scissors"]; // Computer will select from these options
+    for (let x = 0; x < 5; x++) {
+      // Prompt player to choose rock, paper, or scissors.
+      let playerSelection = playerChoice();
+      console.log("Debug Player: " + playerSelection); // log selection for debug
+      roundNumber++; //increase round number for next time
+      //Choose rock, paper, or scissors for computer
+      let computerSelection =
+        playOptions[Math.floor(Math.random() * playOptions.length)];
+      console.log("Debug Computer:" + computerSelection); // log selection for debug
+      switch (playRound(playerSelection, computerSelection)) {
+        case "draw":
+          console.log(
+            `You chose ${playerSelection}, but so did the computer. Draw!`
+          );
+          console.log(
+            `You have ${playerScore} points. The computer has ${computerScore} points.`
+          );
+          break;
+
+        case "loss":
+          console.log(
+            `Too bad, ${computerSelection} beats ${playerSelection}. You lose!`
+          );
+          computerScore++;
+          console.log(
+            `You have ${playerScore} points. The computer has ${computerScore} points.`
+          );
+          break;
+
+        case "win":
+          console.log(
+            `Good choice!, ${playerSelection} beats ${computerSelection}. You win!`
+          );
+          playerScore++;
+          console.log(
+            `You have ${playerScore} points. The computer has ${computerScore} points.`
+          );
+          break;
+      }
+    }
+    console.log(
+      `Final score - You: ${playerScore}   Computer: ${computerScore}`
+    );
+  }
+
+  game();
+</script>
