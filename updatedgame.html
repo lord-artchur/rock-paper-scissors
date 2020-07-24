@@ -1,0 +1,148 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <title>Rock, Paper, Scissors</title>
+  </head>
+  <body>
+    <div class="maingame">
+      <h1>Let The Game Begin!</h1>
+      <span>Choose your destiny:</span>
+      <button class="btn btn-primary" id="rock">Rock</button>
+      <button class="btn btn-primary" id="paper">Paper</button>
+      <button class="btn btn-primary" id="scissors">Scissors</button>
+    </div>
+    <div class="results">
+      <br /><br />
+      <span id="replace"></span>
+      <br />
+      <br />
+      <span>Round: </span><span id="roundNumber">0</span><br />
+      <br />
+      <span>Your Score: </span><span id="playerScore"></span><br /><span
+        >Computer Score: </span
+      ><span id="computerScore"></span>
+    </div>
+  </body>
+</html>
+
+<script>
+  function playRound(playerSelection, computerSelection) {
+    if (playerSelection.toUpperCase() == computerSelection.toUpperCase()) {
+      return "draw";
+    } else if (playerSelection.toUpperCase() == "ROCK") {
+      if (computerSelection.toUpperCase() == "PAPER") {
+        return "loss";
+        l;
+      } else if (computerSelection.toUpperCase() == "SCISSORS") {
+        return "win";
+      }
+    } else if (playerSelection.toUpperCase() == "SCISSORS") {
+      if (computerSelection.toUpperCase() == "ROCK") {
+        return "loss";
+      } else if (computerSelection.toUpperCase() == "PAPER") {
+        return "win";
+      }
+    } else {
+      //player chooses paper
+      if (computerSelection.toUpperCase() == "ROCK") {
+        return "win";
+      } else if (computerSelection.toUpperCase() == "SCISSORS") {
+        return "loss";
+      }
+    }
+  }
+
+  //let roundNumber = 1;
+
+  //   function playerChoice() {
+  //     let playerSelection = prompt(
+  //       `Round ${roundNumber}: Rock, paper, or scissors?`
+  //     );
+  //     if (
+  //       playerSelection.toUpperCase() == "ROCK" ||
+  //       playerSelection.toUpperCase() == "SCISSORS" ||
+  //       playerSelection.toUpperCase() == "PAPER"
+  //     ) {
+  //       return playerSelection;
+  //     } else {
+  //       alert("You must choose rock, paper, or scissors.");
+  //     }
+  //   }
+
+  let playerScore = 0;
+  let computerScore = 0;
+
+  function game(playerSelection) {
+    const playOptions = ["rock", "paper", "scissors"]; // Computer will select from these options
+
+    // Prompt player to choose rock, paper, or scissors.
+    //let playerSelection = playerChoice();
+    //console.log("Debug Player: " + playerSelection); // log selection for debug
+    //roundNumber++; //increase round number for next time
+
+    //Choose rock, paper, or scissors for computer
+    let computerSelection =
+      playOptions[Math.floor(Math.random() * playOptions.length)];
+    console.log("Debug Computer:" + computerSelection); // log selection for debug
+    switch (playRound(playerSelection, computerSelection)) {
+      case "draw":
+        document.getElementById(
+          "replace"
+        ).innerHTML = `You chose ${playerSelection}, but so did the computer. Draw!`;
+        document.getElementById("roundNumber").innerHTML =
+          Number(document.getElementById("roundNumber").innerHTML) + 1;
+        break;
+
+      case "loss":
+        document.getElementById(
+          "replace"
+        ).innerHTML = `Too bad, ${computerSelection} beats ${playerSelection}. You lose!`;
+        computerScore++;
+        if (computerScore == 5) {
+          alert("You lose!");
+          location.reload();
+        }
+        //add point to computer score and one point to round total
+        else
+          document.getElementById("computerScore").innerHTML =
+            Number(document.getElementById("computerScore").innerHTML) + 1;
+        document.getElementById("roundNumber").innerHTML =
+          Number(document.getElementById("roundNumber").innerHTML) + 1;
+        break;
+
+      case "win":
+        document.getElementById(
+          "replace"
+        ).innerHTML = `Good choice!, ${playerSelection} beats ${computerSelection}. You win!`;
+        playerScore++;
+        if (playerScore == 5) {
+          alert("You win!");
+          location.reload();
+        }
+        // add point to player score and one point to round total
+        else
+          document.getElementById("playerScore").innerHTML =
+            Number(document.getElementById("playerScore").innerHTML) + 1;
+        document.getElementById("roundNumber").innerHTML =
+          Number(document.getElementById("roundNumber").innerHTML) + 1;
+        break;
+    }
+    console.log(
+      `Final score - You: ${playerScore}   Computer: ${computerScore}`
+    );
+  }
+
+  const buttons = document.querySelectorAll("button");
+  console.log(buttons);
+  buttonArray = Array.from(buttons);
+  console.log(buttonArray);
+  buttonArray.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      //let playerSelection = event.target.id;
+      game(event.target.id);
+    });
+  });
+</script>
